@@ -1,10 +1,11 @@
 # Unpacking options and defaults
 
 There is more than one way to unpack an `Option` and fall back on a default if it is `None`. To choose the one that meets our needs, we need to consider the following:
+
 * do we need eager or lazy evaluation?
 * do we need to keep the original empty value intact, or modify it in place?
 
-##  `or()` is chainable, evaluates eagerly, keeps empty value intact
+## `or()` is chainable, evaluates eagerly, keeps empty value intact
 
 `or()`is chainable and eagerly evaluates its argument, as is shown in the following example. Note that because `or`'s arguments are evaluated eagerly, the variable passed to `or` is moved.
 
@@ -29,7 +30,7 @@ fn main() {
  }
 ```
 
-##  `or_else()` is chainable, evaluates lazily, keeps empty value intact
+## `or_else()` is chainable, evaluates lazily, keeps empty value intact
 
 Another alternative is to use `or_else`, which is also chainable, and evaluates lazily, as is shown in the following example:
 
@@ -38,7 +39,6 @@ Another alternative is to use `or_else`, which is also chainable, and evaluates 
 enum Fruit { Apple, Orange, Banana, Kiwi, Lemon }
 
 fn main() {
-    let apple = Some(Fruit::Apple);
     let no_fruit: Option<Fruit> = None;
     let get_kiwi_as_fallback = || {
         println!("Providing kiwi as fallback");
@@ -58,30 +58,31 @@ fn main() {
 }
 ```
 
-##  `get_or_insert()` evaluates eagerly, modifies empty value in place
+## `get_or_insert()` evaluates eagerly, modifies empty value in place
 
 To make sure that an `Option` contains a value, we can use `get_or_insert` to modify it in place with a fallback value, as is shown in the following example. Note that `get_or_insert` eagerly evaluates its parameter, so variable `apple` is moved:
 
 ```rust,editable
-#[derive(Debug)] 
+#[derive(Debug)]
 enum Fruit { Apple, Orange, Banana, Kiwi, Lemon }
 
 fn main() {
     let mut my_fruit: Option<Fruit> = None;
     let apple = Fruit::Apple;
     let first_available_fruit = my_fruit.get_or_insert(apple);
-    println!("my_fruit is: {:?}", first_available_fruit);
     println!("first_available_fruit is: {:?}", first_available_fruit);
-    // my_fruit is: Apple
+    println!("my_fruit is: {:?}", my_fruit);
     // first_available_fruit is: Apple
+    // my_fruit is: Some(Apple)
     //println!("Variable named `apple` is moved: {:?}", apple);
     // TODO: uncomment the line above to see the compiler error
 }
 ```
 
-##  `get_or_insert_with()` evaluates lazily, modifies empty value in place
+## `get_or_insert_with()` evaluates lazily, modifies empty value in place
 
 Instead of explicitly providing a value to fall back on, we can pass a closure to `get_or_insert_with`, as follows:
+
 ```rust,editable
 #[derive(Debug)] 
 enum Fruit { Apple, Orange, Banana, Kiwi, Lemon }
@@ -94,11 +95,11 @@ fn main() {
     };
     let first_available_fruit = my_fruit
         .get_or_insert_with(get_lemon_as_fallback);
-    println!("my_fruit is: {:?}", first_available_fruit);
     println!("first_available_fruit is: {:?}", first_available_fruit);
+    println!("my_fruit is: {:?}", my_fruit);
     // Providing lemon as fallback
-    // my_fruit is: Lemon
     // first_available_fruit is: Lemon
+    // my_fruit is: Some(Lemon)
 
     // If the Option has a value, it is left unchanged, and the closure is not invoked
     let mut my_apple = Some(Fruit::Apple);
@@ -113,7 +114,7 @@ fn main() {
 
 ### See also:
 
-[`closures`][closures], [`get_or_insert`][get_or_insert], [`get_or_insert_with`][get_or_insert_with], ,[`moved variables`][moved], [`or`][or], [`or_else`][or_else]
+[`closures`][closures], [`get_or_insert`][get_or_insert], [`get_or_insert_with`][get_or_insert_with], [`moved variables`][moved], [`or`][or], [`or_else`][or_else]
 
 [closures]: https://doc.rust-lang.org/book/ch13-01-closures.html
 [get_or_insert]: https://doc.rust-lang.org/core/option/enum.Option.html#method.get_or_insert
