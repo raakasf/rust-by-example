@@ -23,7 +23,7 @@ struct S<T: Display>(T);
 let s = S(vec![1]);
 ```
 
-Another effect of bounding is that generic instances are allowed to access the 
+Another effect of bounding is that generic instances are allowed to access the
 [methods] of traits specified in the bounds. For example:
 
 ```rust,editable
@@ -58,10 +58,10 @@ fn main() {
     let _triangle = Triangle  { length: 3.0, height: 4.0 };
 
     print_debug(&rectangle);
-    println!("Area: {}", rectangle.area());
+    println!("Area: {}", area(&rectangle));
 
     //print_debug(&_triangle);
-    //println!("Area: {}", _triangle.area());
+    //println!("Area: {}", area(&_triangle));
     // ^ TODO: Try uncommenting these.
     // | Error: Does not implement either `Debug` or `HasArea`. 
 }

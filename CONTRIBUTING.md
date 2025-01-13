@@ -10,7 +10,7 @@ abide by the [Rust code of conduct], which you can find at that link or in the
 
 ## License
 
-RBE is dual licenced under the MIT and Apache 2.0 licenses, and so are all
+RBE is dual licensed under the MIT and Apache 2.0 licenses, and so are all
 contributions. Please see the [`LICENSE-MIT`] and [`LICENSE-APACHE`] files in
 this directory for more details.
 
@@ -44,7 +44,7 @@ We use the following labels:
 
 ## Development workflow
 
-To build RBE, [install Rust], and then:
+To build RBE, [install Rust](https://www.rust-lang.org/tools/install), and then:
 
 ```bash
 $ git clone https://github.com/rust-lang/rust-by-example
@@ -53,10 +53,17 @@ $ cargo install mdbook
 $ mdbook build
 ```
 
+**The following warnings can be ignored safely.**
+
+```text
+[WARN] (mdbook::preprocess::cmd): The command wasn't found, is the "gettext" preprocessor installed?
+[WARN] (mdbook::preprocess::cmd):   Command: mdbook-gettext
+```
+
 [install Rust]: http://rust-lang.org/install.html
 
 The files will be in the `book` directory at the top-level; `mdbook serve` will
-open the contents in your web browser.
+open the contents in your web browser ([localhost:3000](http://localhost:3000) by default).
 
 To run the tests:
 

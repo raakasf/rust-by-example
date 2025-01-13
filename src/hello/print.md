@@ -1,7 +1,7 @@
 # Formatted print
 
 Printing is handled by a series of [`macros`][macros] defined in
-[`std::fmt`][fmt] some of which include:
+[`std::fmt`][fmt] some of which are:
 
 * `format!`: write formatted text to [`String`][string]
 * `print!`: same as `format!` but the text is printed to the console
@@ -37,20 +37,18 @@ fn main() {
     println!("Base 2 (binary):       {:b}", 69420); // 10000111100101100
     println!("Base 8 (octal):        {:o}", 69420); // 207454
     println!("Base 16 (hexadecimal): {:x}", 69420); // 10f2c
-    println!("Base 16 (hexadecimal): {:X}", 69420); // 10F2C
-
 
     // You can right-justify text with a specified width. This will
     // output "    1". (Four white spaces and a "1", for a total width of 5.)
     println!("{number:>5}", number=1);
 
     // You can pad numbers with extra zeroes,
+    println!("{number:0>5}", number=1); // 00001
     // and left-adjust by flipping the sign. This will output "10000".
-    println!("{number:0<5}", number=1);
+    println!("{number:0<5}", number=1); // 10000
 
     // You can use named arguments in the format specifier by appending a `$`.
     println!("{number:0>width$}", number=1, width=5);
-
 
     // Rust even checks to make sure the correct number of arguments are used.
     println!("My name is {0}, {1} {0}", "Bond");
@@ -59,12 +57,12 @@ fn main() {
     // Only types that implement fmt::Display can be formatted with `{}`. User-
     // defined types do not implement fmt::Display by default.
 
-    #[allow(dead_code)]
+    #[allow(dead_code)] // disable `dead_code` which warn against unused module
     struct Structure(i32);
 
     // This will not compile because `Structure` does not implement
     // fmt::Display.
-    //println!("This struct `{}` won't print...", Structure(3));
+    // println!("This struct `{}` won't print...", Structure(3));
     // TODO ^ Try uncommenting this line
 
     // For Rust 1.58 and above, you can directly capture the argument from a
@@ -89,6 +87,8 @@ for these types. To print text for custom types, more steps are required.
 Implementing the `fmt::Display` trait automatically implements the
 [`ToString`] trait which allows us to [convert] the type to [`String`][string].
 
+In *line 43*, `#[allow(dead_code)]` is an [attribute] which only applies to the module after it.
+
 ### Activities
 
 * Fix the issue in the above code (see FIXME) so that it runs without
@@ -102,8 +102,7 @@ Implementing the `fmt::Display` trait automatically implements the
 
 ### See also:
 
-[`std::fmt`][fmt], [`macros`][macros], [`struct`][structs],
-and [`traits`][traits]
+[`std::fmt`][fmt], [`macros`][macros], [`struct`][structs], [`traits`][traits], and [`dead_code`][dead_code]
 
 [fmt]: https://doc.rust-lang.org/std/fmt/
 [macros]: ../macros.md
@@ -112,3 +111,5 @@ and [`traits`][traits]
 [traits]: https://doc.rust-lang.org/std/fmt/#formatting-traits
 [`ToString`]: https://doc.rust-lang.org/std/string/trait.ToString.html
 [convert]: ../conversion/string.md
+[attribute]: ../attribute.md
+[dead_code]: ../attribute/unused.md
